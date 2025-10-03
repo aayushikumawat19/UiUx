@@ -1,27 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import type { ReactElement } from 'react';
+import React, { useState, useEffect, type ReactElement, type ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
-import Table from '../comman/Table';
-import Footer from '../comman/Footer';
-import FormField from '../comman/FormField';
+import Table from '@comman/Table';
+import Footer from '@comman/Footer';
+import FormField from '@comman/FormField';
 
 type TableRow = (string | ReactElement)[];
-const StaffList = () => {
+
+const StaffList: React.FC = () => {
   const [tableData, setTableData] = useState<TableRow[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
+  const actionLink = (): ReactElement => (
+    <Link to="#" className="text-blue-600 hover:underline">
+      View more
+    </Link>
+  );
 
   useEffect(() => {
     const data: TableRow[] = [
-      ["01", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
-      ["02", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
-      ["01", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
-      ["02", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
-      ["01", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
-      ["02", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
-      ["01", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
-      ["02", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
-      ["01", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
-      ["02", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
       ["01", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
       ["02", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
       ["01", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
@@ -30,13 +26,7 @@ const StaffList = () => {
     setTableData(data);
   }, []);
 
-  const actionLink = () => (
-    <Link to="#" className="text-blue-600 hover:underline">
-      View more
-    </Link>
-  );
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 

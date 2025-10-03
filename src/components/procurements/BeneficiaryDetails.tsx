@@ -1,12 +1,10 @@
-import React, { useState, type ChangeEvent } from 'react';
-import FormField from '../comman/FormField';
+import React, { useState, type ChangeEvent } from "react";
+import FormField from "@comman/FormField";
+import type { BeneficiaryDetailsForm } from "@procurements/types";
+import { initialBeneficiaryDetails } from "@procurements/constants";
 
-const BeneficiaryDetails = () => {
-  const [formValues, setFormValues] = useState({
-    requestTitle: '',
-    quantity: '',
-    dateFrom: '',
-  });
+const BeneficiaryDetails: React.FC = () => {
+  const [formValues, setFormValues] = useState<BeneficiaryDetailsForm>(initialBeneficiaryDetails);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
@@ -16,29 +14,10 @@ const BeneficiaryDetails = () => {
   return (
     <div className="payment-voucher">
       <h4>Beneficiary Payment Details</h4>
-
       <div className="flex justify-between gap-4">
-        <FormField
-          label="Item"
-          id="requestTitle"
-          placeholder="Enter item name"
-          value={formValues.requestTitle}
-          onChange={handleChange}
-        />
-        <FormField
-          label="Quantity"
-          id="quantity"
-          placeholder="Enter quantity"
-          value={formValues.quantity}
-          onChange={handleChange}
-        />
-        <FormField
-          label="Date From"
-          id="dateFrom"
-          type="date"
-          value={formValues.dateFrom}
-          onChange={handleChange}
-        />
+        <FormField label="Item" id="requestTitle" placeholder="Enter item name" value={formValues.requestTitle} onChange={handleChange} />
+        <FormField label="Quantity" id="quantity" placeholder="Enter quantity" value={formValues.quantity} onChange={handleChange} />
+        <FormField label="Date From" id="dateFrom" type="date" value={formValues.dateFrom} onChange={handleChange} />
       </div>
     </div>
   );

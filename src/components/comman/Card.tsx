@@ -1,5 +1,5 @@
 import React from 'react';
-import ArrowUpIcon from '../../assets/Small Arrow Up.png';
+import ArrowUpIcon from '@assets/Small Arrow Up.png';
 
 interface CardProps {
   value: string;

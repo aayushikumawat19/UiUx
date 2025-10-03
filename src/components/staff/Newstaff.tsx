@@ -1,36 +1,55 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import FormField from '../comman/FormField';
-import UploadPhoto from '../inventory/UploadPhoto';
+import React, {
+  useState,
+  type ChangeEvent,
+  type FormEvent
+} from "react";
+import { useNavigate } from "react-router-dom";
+import FormField from "@comman/FormField";
+import UploadPhoto from "@inventory/UploadPhoto";
 
-const Newstaff = () => {
+interface StaffFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  gender: string;
+  staffID: string;
+  designation: string;
+  officialEmail: string;
+}
+
+const Newstaff: React.FC = () => {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    gender: '',
-    staffID: '',
-    designation: '',
-    officialEmail: '',
+  const [formData, setFormData] = useState<StaffFormData>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    gender: "",
+    staffID: "",
+    designation: "",
+    officialEmail: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     const { id, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [id]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleImageChange = (file: File) => {
+    console.log("Selected image:", file);
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log('Submitted Data:', formData);
-
-    navigate('/dashboard/newstaff/new');
+    console.log("Submitted Data:", formData);
+    navigate("/dashboard/newstaff/new");
   };
 
   return (
@@ -52,7 +71,7 @@ const Newstaff = () => {
         className="bg-white rounded-lg shadow p-6 space-y-6"
       >
         <div className="flex flex-col lg:flex-row gap-6">
-          <UploadPhoto />
+          <UploadPhoto onImageChange={handleImageChange} />
 
           <div className="flex-1 space-y-5">
             <div className="flex flex-col md:flex-row gap-4">
@@ -97,10 +116,10 @@ const Newstaff = () => {
                 type="select"
                 id="gender"
                 options={[
-                  { value: '', label: 'Select gender' },
-                  { value: 'male', label: 'Male' },
-                  { value: 'female', label: 'Female' },
-                  { value: 'other', label: 'Other' },
+                  { value: "", label: "Select gender" },
+                  { value: "male", label: "Male" },
+                  { value: "female", label: "Female" },
+                  { value: "other", label: "Other" },
                 ]}
                 value={formData.gender}
                 onChange={handleChange}
@@ -120,10 +139,10 @@ const Newstaff = () => {
                 type="select"
                 id="designation"
                 options={[
-                  { value: '', label: 'Select designation' },
-                  { value: 'developer', label: 'Developer' },
-                  { value: 'designer', label: 'Designer' },
-                  { value: 'analyst', label: 'Analyst' },
+                  { value: "", label: "Select designation" },
+                  { value: "developer", label: "Developer" },
+                  { value: "designer", label: "Designer" },
+                  { value: "analyst", label: "Analyst" },
                 ]}
                 value={formData.designation}
                 onChange={handleChange}
@@ -142,7 +161,7 @@ const Newstaff = () => {
 
         <button
           type="submit"
-          className="block w-full text-center py-2 mt-6 rounded-md text-white font-semibold bg-gradient-to-r from-blue-600 to-cyan-500 hover:opacity-90"
+          className="block w-full py-2 mt-6 rounded-md text-white font-semibold bg-gradient-to-r from-blue-600 to-cyan-500 hover:opacity-90"
         >
           Add Staff
         </button>

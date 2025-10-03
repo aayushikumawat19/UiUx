@@ -1,8 +1,7 @@
 import React from "react";
-import "./AuthLayout.css";
-// NOTE: Make sure the paths to your images are correct!
-import Depositphotos from "../assets/Depositphotos_412884830_L 1.png";
-import Group from "../assets/Group 13.png";
+import "@layout/AuthLayout.css";
+import Depositphotos from "@assets/Depositphotos_412884830_L 1.png";
+import Group from "@assets/Group 13.png";
 
 const AuthLayout = ({
   title,

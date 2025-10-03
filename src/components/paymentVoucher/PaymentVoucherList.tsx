@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import Card from '../comman/Card';
-import Table from '../comman/Table';
-import Chart from '../comman/Chart';
-import Footer from '../comman/Footer';
-import IconStaff from '../../assets/Group 9.png';
-import IconApplication from '../../assets/Group 9 (1).png';
-import IconProjects from '../../assets/Group 9 (2).png';
-import IconDepartments from '../../assets/Group 9 (3).png';
-import ChartImage from '../../assets/Group 23.png';
+import Card from '@comman/Card';
+import Table from '@comman/Table';
+import Chart from '@comman/Chart';
+import Footer from '@comman/Footer';
+import IconStaff from '@assets/Group 9.png';
+import IconApplication from '@assets/Group 9 (1).png';
+import IconProjects from '@assets/Group 9 (2).png';
+import IconDepartments from '@assets/Group 9 (3).png';
+import ChartImage from '@assets/Group 23.png';
 
-const PaymentVoucherList = () => {
-  const [cardData, setCardData] = useState([
+type CardData = {
+  value: string;
+  iconSrc: string;
+  label: string;
+  trend: string;
+};
+
+const PaymentVoucherList: React.FC = () => {
+  const [cardData, setCardData] = useState<CardData[]>([
     {
       value: '0',
       iconSrc: IconStaff,
@@ -38,7 +45,7 @@ const PaymentVoucherList = () => {
   ]);
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       setCardData([
         {
           value: '250',
@@ -66,10 +73,13 @@ const PaymentVoucherList = () => {
         },
       ]);
     }, 1000);
+
+    return () => clearTimeout(timeout);
   }, []);
 
   return (
-    <div className="flex flex-col flex-wrap gap-5 bg-white">
+    <div className="flex flex-col gap-8 p-6 bg-gray-50 min-h-screen">
+      {/* Cards */}
       <div className="flex flex-wrap gap-5">
         {cardData.map((card, index) => (
           <Card
@@ -82,7 +92,8 @@ const PaymentVoucherList = () => {
         ))}
       </div>
 
-      <div className="flex gap-5 flex-wrap">
+      {/* Tables */}
+      <div className="flex flex-wrap gap-5">
         <Table
           title="Memo"
           headers={['S/N', 'Memo Title', 'Sent From', 'Sent To', 'Status']}
@@ -93,6 +104,7 @@ const PaymentVoucherList = () => {
             ['04', 'Operations memo', 'Ibrahim Musa', 'Otor John', 'Approved'],
           ]}
         />
+
         <Table
           title="Staff List"
           headers={['S/N', 'Staff Name', 'Staff Role', 'Designation']}
@@ -105,7 +117,8 @@ const PaymentVoucherList = () => {
         />
       </div>
 
-      <div className="flex gap-5 flex-wrap">
+      {/* Payment Vouchers and Chart */}
+      <div className="flex flex-wrap gap-5">
         <Table
           title="Payment Vouchers"
           headers={['S/N', 'Subject', 'Date', 'Status']}
@@ -116,6 +129,7 @@ const PaymentVoucherList = () => {
             ['04', 'Request for project proposal fee', '03/01/2023', 'Pending'],
           ]}
         />
+
         <Chart
           title="Staff Applications Card"
           totalApplications="500"
@@ -128,6 +142,7 @@ const PaymentVoucherList = () => {
         />
       </div>
 
+      {/* Footer */}
       <Footer />
     </div>
   );

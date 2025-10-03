@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 
-interface DetailsGroupProps {
+export interface DetailsGroupProps {
   label: string;
   value: string;
 }
 
 const DetailsGroup: React.FC<DetailsGroupProps> = ({ label, value }) => {
   return (
-    <div className="details-group">
-      <label>{label}</label>
-      <p>{value}</p>
+    <div className="flex flex-col">
+      <span className="font-semibold">{label}</span>
+      <span>{value}</span>
     </div>
   );
 };

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import Card from '../comman/Card';
-import Table from '../comman/Table';
-import Footer from '../comman/Footer';
-import GrossSalaryIcon from '../../assets/Group 38.png';
-import NetSalaryIcon from '../../assets/Group 9 (1).png';
-import TaxIcon from '../../assets/Group 38 (1).png';
-import LoanIcon from '../../assets/Group 38 (2).png';
+import Card from '@comman/Card';
+import Table from '@comman/Table';
+import Footer from '@comman/Footer';
+import GrossSalaryIcon from '@assets/Group 38.png';
+import NetSalaryIcon from '@assets/Group 9 (1).png';
+import TaxIcon from '@assets/Group 38 (1).png';
+import LoanIcon from '@assets/Group 38 (2).png';
 
 const Payroll = () => {
   const grossSalary = 250;

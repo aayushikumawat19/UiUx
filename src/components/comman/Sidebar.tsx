@@ -1,17 +1,17 @@
 import { NavLink } from 'react-router-dom';
-import DashboardIcon from '../../assets/Sidebar/Dashboard (1).png';
-import StaffIcon from '../../assets/Sidebar/Staff.png';
-import PayrollIcon from '../../assets/Sidebar/Payroll.png';
-import MemoIcon from '../../assets/Sidebar/Memo.png';
-import CircularsIcon from '../../assets/Sidebar/Circulars.png';
-import MaintenanceIcon from '../../assets/Sidebar/Maintenance.png';
-import LogisticsIcon from '../../assets/Sidebar/Logistics.png';
-import BudgetIcon from '../../assets/Sidebar/Budget.png';
-import StockIcon from '../../assets/Sidebar/Stock.png';
-import NotificationsIcon from '../../assets/Sidebar/Notifications.png';
-import CapacityIcon from '../../assets/Sidebar/Capacity Building.png';
-import ProcurementIcon from '../../assets/Sidebar/Procurement.png';
-import LogoIcon from '../../assets/Group 13.png';
+import DashboardIcon from '@assets/Sidebar/Dashboard (1).png';
+import StaffIcon from '@assets/Sidebar/Staff.png';
+import PayrollIcon from '@assets/Sidebar/Payroll.png';
+import MemoIcon from '@assets/Sidebar/Memo.png';
+import CircularsIcon from '@assets/Sidebar/Circulars.png';
+import MaintenanceIcon from '@assets/Sidebar/Maintenance.png';
+import LogisticsIcon from '@assets/Sidebar/Logistics.png';
+import BudgetIcon from '@assets/Sidebar/Budget.png';
+import StockIcon from '@assets/Sidebar/Stock.png';
+import NotificationsIcon from '@assets/Sidebar/Notifications.png';
+import CapacityIcon from '@assets/Sidebar/Capacity Building.png';
+import ProcurementIcon from '@assets/Sidebar/Procurement.png';
+import LogoIcon from '@assets/Group 13.png';
 
 const Sidebar = () => {
   const links = [

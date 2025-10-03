@@ -1,17 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthLayout from "./AuthLayout";
-import FormField from "./comman/FormField";
+import AuthLayout from "@layout/AuthLayout";
+import FormField from "@comman/FormField";
 
-const Signup = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
-  const [message, setMessage] = useState("");
+interface SignupResponse {
+  message?: string;
+}
+
+const Signup: React.FC = () => {
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [role, setRole] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
   const navigate = useNavigate();
 
-  const handleSignup = async (e: React.FormEvent) => {
+  const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!firstName || !lastName || !email || !role) {
@@ -22,13 +26,16 @@ const Signup = () => {
     const userData = { firstName, lastName, email, roles: [role] };
 
     try {
-      const res = await fetch("http://192.168.0.28:8080/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
-      });
+      const res = await fetch(
+        "http://192.168.0.28:8080/api/auth/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(userData),
+        }
+      );
 
-      const data = await res.json();
+      const data: SignupResponse = await res.json();
       console.log("Signup response:", data);
 
       if (!res.ok) {
@@ -36,10 +43,8 @@ const Signup = () => {
         return;
       }
 
-      // success message
       setMessage(data.message || "Registration successful");
 
-      // fields clear
       setFirstName("");
       setLastName("");
       setEmail("");
@@ -49,7 +54,7 @@ const Signup = () => {
       setMessage(`Registration failed: ${err.message}`);
     }
   };
-  
+
   return (
     <AuthLayout title="Create Account">
       <form onSubmit={handleSignup} className="flex flex-col gap-5">
@@ -92,9 +97,7 @@ const Signup = () => {
       </form>
 
       {message && (
-        <p
-          style={{ color: "green",fontSize: "14px",marginTop: "5px",fontWeight: "500",}}
-        >
+        <p style={{ color: "green", fontSize: "14px", marginTop: "5px", fontWeight: "500" }}>
           {message}
         </p>
       )}

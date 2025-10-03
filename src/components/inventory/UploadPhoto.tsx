@@ -1,24 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-const UploadPhoto = ({ onImageChange }) => {
-  const [image, setImage] = useState(null);
-  const [imageName, setImageName] = useState('');
-  const [error, setError] = useState('');
+export interface UploadPhotoProps {
+  onImageChange: (file: File | null, preview: string | null) => void;
+}
 
-  const handleImageChange = (event) => {
-    const file = event.target.files?.[0];
+const UploadPhoto: React.FC<UploadPhotoProps> = ({ onImageChange }) => {
+  const [image, setImage] = useState<string | null>(null);
+  const [imageName, setImageName] = useState("");
+  const [error, setError] = useState("");
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || null;
+
     if (file) {
       if (file.size > 2 * 1024 * 1024) {
-        setError('File size should not exceed 2MB.');
+        setError("File size should not exceed 2MB.");
         setImage(null);
-        setImageName('');
+        setImageName("");
+        onImageChange(null, null);
       } else {
-        setError('');
+        setError("");
         setImageName(file.name);
+
         const reader = new FileReader();
         reader.onloadend = () => {
-          setImage(reader.result);
-          onImageChange(reader.result);
+          const preview = reader.result as string;
+          setImage(preview);
+          onImageChange(file, preview);
         };
         reader.readAsDataURL(file);
       }
@@ -30,7 +38,11 @@ const UploadPhoto = ({ onImageChange }) => {
       <label htmlFor="imageUpload" className="cursor-pointer text-center mb-2">
         <div className="w-30 h-30 border-2 border-dashed border-blue-600 rounded-full flex items-center justify-center mb-2">
           {image ? (
-            <img src={image} alt="Uploaded" className="w-full h-full object-cover rounded-full" />
+            <img
+              src={image}
+              alt="Uploaded"
+              className="w-full h-full object-cover rounded-full"
+            />
           ) : (
             <span className="text-4xl text-blue-600">+</span>
           )}
@@ -46,8 +58,12 @@ const UploadPhoto = ({ onImageChange }) => {
       />
       {imageName && <p className="mt-2 text-gray-800 text-sm">{imageName}</p>}
       <div className="mt-2 text-gray-600 text-xs text-center">
-        <p>Allowed format: <span className="font-bold text-blue-600">JPG, JPEG, PNG</span></p>
-        <p>Max file size: <span className="font-bold text-red-500">2MB</span></p>
+        <p>
+          Allowed format: <span className="font-bold text-blue-600">JPG, JPEG, PNG</span>
+        </p>
+        <p>
+          Max file size: <span className="font-bold text-red-500">2MB</span>
+        </p>
       </div>
       {error && <p className="text-red-500 text-xs mt-1 text-center">{error}</p>}
     </div>

@@ -1,25 +1,27 @@
-import React, { useState, type ChangeEvent, type FormEvent } from 'react';
-import Table from '../comman/Table';
-import FormField from '../comman/FormField';
+import React, { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
+import Table from "@comman/Table";
+import FormField from "@comman/FormField";
 
 const Memo: React.FC = () => {
-  const [subject, setSubject] = useState('');
+  const [subject, setSubject] = useState<string>("");
+
   const [tableData, setTableData] = useState<string[][]>([
     ["01", "Consultancy service", "FARS", "1", "1,000,000.00", "1,000,000.00", "7.50%", "75,000.00", "1,075,000.00", "2.5%", "25,000.00", "1,050,000.00"],
     ["02", "Consultancy service", "Tax Service", "1", "500,000.00", "500,000.00", "7.50%", "37,500.00", "537,500.00", "10%", "50,000.00", "487,500.00"]
   ]);
 
-  const totalData = [
+  const totalData: string[][] = [
     ["Total", "1,500,000.00", "112,500.00", "75,000.00", "1,537,500.00"]
   ];
 
-  const [accountName, setAccountName] = useState('');
-  const [accountNumber, setAccountNumber] = useState('');
-  const [bankName, setBankName] = useState('');
+  const [accountName, setAccountName] = useState<string>("");
+  const [accountNumber, setAccountNumber] = useState<string>("");
+  const [bankName, setBankName] = useState<string>("");
 
-const handleSubjectChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-  setSubject(e.target.value);
-};
+  const handleSubjectChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setSubject(e.target.value);
+  };
 
   const handleAccountNameChange = (e: ChangeEvent<HTMLInputElement>) => setAccountName(e.target.value);
   const handleAccountNumberChange = (e: ChangeEvent<HTMLInputElement>) => setAccountNumber(e.target.value);
@@ -42,9 +44,7 @@ const handleSubjectChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaEleme
 
       <form onSubmit={handleSubmit}>
         <header className="mb-5">
-          <label htmlFor="subject" className="block text-sm font-medium mb-1">
-            Subject
-          </label>
+          <label htmlFor="subject" className="block text-sm font-medium mb-1">Subject</label>
           <FormField
             id="subject"
             label="Subject"
@@ -67,6 +67,7 @@ const handleSubjectChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaEleme
           <button
             type="button"
             className="py-2 px-4 bg-white text-blue-600 mt-2 border border-blue-600 rounded hover:bg-blue-50 transition"
+            onClick={() => setTableData([...tableData, Array(tableData[0].length).fill("")])}
           >
             + Add another row
           </button>
@@ -88,9 +89,7 @@ const handleSubjectChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaEleme
           <h3 className="text-lg font-semibold mb-4">Beneficiary Payment Details</h3>
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
-              <label htmlFor="accountName" className="block text-sm font-medium mb-1">
-                Account Name
-              </label>
+              <label htmlFor="accountName" className="block text-sm font-medium mb-1">Account Name</label>
               <input
                 type="text"
                 id="accountName"
@@ -101,9 +100,7 @@ const handleSubjectChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaEleme
               />
             </div>
             <div className="flex-1">
-              <label htmlFor="accountNumber" className="block text-sm font-medium mb-1">
-                Account Number
-              </label>
+              <label htmlFor="accountNumber" className="block text-sm font-medium mb-1">Account Number</label>
               <input
                 type="text"
                 id="accountNumber"
@@ -114,9 +111,7 @@ const handleSubjectChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaEleme
               />
             </div>
             <div className="flex-1">
-              <label htmlFor="bankName" className="block text-sm font-medium mb-1">
-                Bank Name
-              </label>
+              <label htmlFor="bankName" className="block text-sm font-medium mb-1">Bank Name</label>
               <input
                 type="text"
                 id="bankName"

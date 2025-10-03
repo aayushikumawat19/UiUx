@@ -1,44 +1,40 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import ForgotPassword from './components/ForgotPassword';
-import PasswordReset from './components/PasswordReset';
-import StaffList from './components/staff/StaffList';
-import PaymentVoucherList from './components/paymentVoucher/PaymentVoucherList';
-import Payroll from './components/payroll/Payroll';
-import Circulars from './components/circulars/Circulars';
-import Maintenance from './components/maintenance/Maintenance';
-import Logistics from './components/logistics/Logistics';
-import OfficeBudget from './components/officeBudget/OfficeBudget';
-import Inventory from './components/inventory/Inventory';   
-import Notifications from './components/notifications/Notifications';
-import CapacityBuilding from './components/capacityBuilding/CapacityBuilding';
-import Procurements from './components/procurements/Procurements';
-import DashboardLayout from './components/layout/DashboardLayout';
-import DashboardHome from './components/dashboard/DashboardHome';
-import MemoPage from './components/memo/AllMemos';
-import CreateMemo from './components/memo/CreateMemo';
-import Back from './components/notifications/Back';
-import Procreate from './components/procurements/Procreate';
-import Request from './components/logistics/Request';
-import Budget from './components/officeBudget/Budget';
-import Screens from './components/circulars/Screens';
-import Building from './components/capacityBuilding/Building';
-import Build from './components/capacityBuilding/Build';
-import Item from './components/inventory/Item';
-import Main from './components/maintenance/Main';
-import Mainn from './components/maintenance/Mainn';
-import Newstaff from './components/staff/Newstaff';
-import Staffnew from './components/staff/Staffnew';
-import New from './components/staff/New';
-import Memo from './components/staff/Memo';
-import Createsalary from './components/payroll/Createsalary';
-import Createsalaryy from './components/payroll/Createsalaryy';
-import Payslip from './components/payroll/Payslip';
-import EmailVerification from './components/EmailVerification';
-import TwoFactorAuth from './components/TwoFactorAuth';
-import LoginForm from './components/LoginForm';
-import Signup from "./components/signup";
-import ChangePassword from "./components/ChangePassword";
-import './App.css';
+import { Routes, Route, Navigate } from "react-router-dom";
+import "./App.css";
+import DashboardLayout from "@layout/DashboardLayout";
+import DashboardHome from "@dashboard/DashboardHome";
+import StaffList from "@staff/StaffList";
+import Newstaff from "@staff/Newstaff";
+import Staffnew from "@staff/Staffnew";
+import New from "@staff/New";
+import Memo from "@staff/Memo";
+import PaymentVoucherList from "@paymentVoucher/PaymentVoucherList";
+import Payroll from "@payroll/Payroll";
+import Createsalary from "@payroll/Createsalary";
+import Createsalaryy from "@payroll/Createsalaryy";
+import Payslip from "@payroll/Payslip";
+import Circulars from "@circulars/Circulars";
+import Screens from "@circulars/Screens";
+import Maintenance from "@maintenance/Maintenance";
+import Main from "@maintenance/Main";
+import Mainn from "@maintenance/Mainn";
+import Logistics from "@logistics/Logistics";
+import Request from "@logistics/Request";
+import OfficeBudget from "@officeBudget/OfficeBudget";
+import Budget from "@officeBudget/Budget";
+import Inventory from "@inventory/Inventory";
+import Item from "@inventory/Item";
+import Notifications from "@notifications/Notifications";
+import Back from "@notifications/Back";
+import CapacityBuilding from "@capacityBuilding/CapacityBuilding";
+import Building from "@capacityBuilding/Building";
+import Build from "@capacityBuilding/Build";
+import Procurements from "@procurements/Procurements";
+import Procreate from "@procurements/Procreate";
+import MemoPage from "@memo/AllMemos";
+import CreateMemo from "@memo/CreateMemo";
+import LoginForm from "@components/LoginForm";
+import Signup from "@components/signup";
+import ChangePassword from "@components/ChangePassword";
 
 function App() {
   return (
@@ -47,10 +43,6 @@ function App() {
         <Route path="/changepassword/:id" element={<ChangePassword />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/2fa" element={<TwoFactorAuth />}/>
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/email-verification" element={<EmailVerification/>} />
-        <Route path="/password-reset" element={<PasswordReset />} />
         
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<DashboardHome />} />

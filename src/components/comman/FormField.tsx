@@ -1,6 +1,6 @@
-// components/comman/FormField.tsx
 import React from "react";
-import type {ChangeEvent} from "react";
+import type { ChangeEvent } from "react";
+
 type Option = {
   value: string;
   label: string;
@@ -9,39 +9,42 @@ type Option = {
 type FormFieldProps = {
   label: string;
   id: string;
-  type: string;
+  type?: string;
   value: string;
   placeholder?: string;
-  onChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
-  errorMessage?: string;
+  onChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
   autoComplete?: string;
   readOnly?: boolean;
-  options?: Option[]; // For select type
+  options?: Option[];
+  error?: string;
+  className?: string;
 };
 
 const FormField: React.FC<FormFieldProps> = ({
   label,
   id,
-  type,
+  type = "text",
   value,
   placeholder,
   onChange,
-  errorMessage,
   autoComplete = "off",
   readOnly = false,
   options = [],
+  error,
+  className = "",
 }) => {
   return (
-    <div className="form-field">
+    <div className={`form-field ${className}`}>
       <label htmlFor={id} className="form-label">
         {label}
       </label>
+
       {type === "select" ? (
         <select
           id={id}
           value={value}
           onChange={onChange}
-          className={`form-input ${errorMessage ? "border-red-500" : ""}`}
+          className={`form-input ${error ? "border-red-500" : ""}`}
         >
           {options.map((opt) => (
             <option key={opt.value} value={opt.value}>
@@ -49,6 +52,16 @@ const FormField: React.FC<FormFieldProps> = ({
             </option>
           ))}
         </select>
+      ) : type === "textarea" ? (
+        <textarea
+          id={id}
+          placeholder={placeholder}
+          value={value}
+          autoComplete={autoComplete}
+          readOnly={readOnly}
+          onChange={onChange}
+          className={`form-input ${error ? "border-red-500" : ""}`}
+        />
       ) : (
         <input
           id={id}
@@ -58,11 +71,12 @@ const FormField: React.FC<FormFieldProps> = ({
           autoComplete={autoComplete}
           readOnly={readOnly}
           onChange={onChange}
-          className={`form-input ${errorMessage ? "border-red-500" : ""}`}
+          className={`form-input ${error ? "border-red-500" : ""}`}
         />
       )}
-      {errorMessage && (
-        <p className="error-message text-red-500">{errorMessage}</p>
+
+      {error && (
+        <p className="error-message text-red-500 text-xs mt-1">{error}</p>
       )}
     </div>
   );

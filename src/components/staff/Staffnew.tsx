@@ -1,24 +1,52 @@
-import React, { useState } from 'react';
-import Button from '../../components/comman/Button';
-import FormField from '../comman/FormField';
-import UploadPhoto from '../inventory/UploadPhoto';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "@comman/Button";
+import FormField from "@comman/FormField";
+import UploadPhoto from "@inventory/UploadPhoto";
 
-const Staffnew = () => {
+type StaffFormData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  gender: string;
+  staffID: string;
+  designation: string;
+  officialEmail: string;
+};
+
+const Staffnew: React.FC = () => {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    gender: '',
-    staffID: '',
-    designation: '',
-    officialEmail: '',
+  const [formData, setFormData] = useState<StaffFormData>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    gender: "",
+    staffID: "",
+    designation: "",
+    officialEmail: "",
   });
 
-  const handleChange = (e) => {
+  const genderOptions = [
+    { value: "", label: "Select gender" },
+    { value: "male", label: "Male" },
+    { value: "female", label: "Female" },
+    { value: "other", label: "Other" },
+  ];
+
+  const designationOptions = [
+    { value: "", label: "Select designation" },
+    { value: "developer", label: "Developer" },
+    { value: "designer", label: "Designer" },
+    { value: "analyst", label: "Analyst" },
+  ];
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     const { id, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -26,22 +54,32 @@ const Staffnew = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleImageChange = (file: File) => {
+    console.log("Image selected:", file);
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
-    navigate('/dashboard/staffnew/newstaff');
+    console.log("Form Data:", formData);
+    navigate("/dashboard/staffnew/newstaff");
   };
 
   return (
     <div className="p-6 min-h-screen">
-      <button className="text-blue-600 mb-4 hover:underline" onClick={() => navigate(-1)}>Back</button>
+      <button
+        className="text-blue-600 mb-4 hover:underline"
+        onClick={() => navigate(-1)}
+      >
+        Back
+      </button>
+
       <header className="mb-6">
         <h2 className="text-2xl font-bold text-gray-800">Add a New Staff</h2>
       </header>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-lg space-y-6">
         <div className="flex flex-col lg:flex-row gap-6">
-          <UploadPhoto />
+          <UploadPhoto onImageChange={handleImageChange} />
 
           <div className="flex-1 space-y-5">
             <div className="flex gap-4">
@@ -85,12 +123,7 @@ const Staffnew = () => {
                 label="Gender"
                 type="select"
                 id="gender"
-                options={[
-                  { value: '', label: 'Select gender' },
-                  { value: 'male', label: 'Male' },
-                  { value: 'female', label: 'Female' },
-                  { value: 'other', label: 'Other' },
-                ]}
+                options={genderOptions}
                 value={formData.gender}
                 onChange={handleChange}
               />
@@ -108,12 +141,7 @@ const Staffnew = () => {
                 label="Designation"
                 type="select"
                 id="designation"
-                options={[
-                  { value: '', label: 'Select designation' },
-                  { value: 'developer', label: 'Developer' },
-                  { value: 'designer', label: 'Designer' },
-                  { value: 'analyst', label: 'Analyst' },
-                ]}
+                options={designationOptions}
                 value={formData.designation}
                 onChange={handleChange}
               />
@@ -129,12 +157,11 @@ const Staffnew = () => {
           </div>
         </div>
 
-        <button
+        <Button
           type="submit"
           className="w-full text-center py-2 mt-6 rounded-md text-white font-semibold bg-gradient-to-r from-blue-600 to-cyan-500 hover:opacity-90"
-        >
-          Add Staff
-        </button>
+          text="Add Staff"
+        />
       </form>
     </div>
   );

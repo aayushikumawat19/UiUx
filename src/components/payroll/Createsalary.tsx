@@ -1,10 +1,11 @@
-import React, { useState, type ChangeEvent, FormEvent } from 'react';
-import FormField from '../comman/FormField';
+import React, { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
+import FormField from '@comman/FormField';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Createsalary = () => {
   const navigate = useNavigate();
-  
+
   const [formValues, setFormValues] = useState({
     sentTo: '',
     level: '',
@@ -14,7 +15,7 @@ const Createsalary = () => {
     deductions: '',
     basicSalary: '',
   });
-  
+
   const [errors, setErrors] = useState({
     sentTo: '',
     level: '',
@@ -25,7 +26,9 @@ const Createsalary = () => {
     basicSalary: '',
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     const { id, value } = e.target;
     setFormValues((prev) => ({ ...prev, [id]: value }));
     setErrors((prev) => ({ ...prev, [id]: '' }));
@@ -33,6 +36,7 @@ const Createsalary = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+
     let newErrors = { ...errors };
     let hasError = false;
 
@@ -47,7 +51,7 @@ const Createsalary = () => {
 
     if (!hasError) {
       console.log('Form Submitted:', formValues);
-      navigate('/dashboard/Createsalary/Createsalaryy'); // Redirect
+      navigate('/dashboard/Createsalary/Createsalaryy');
     }
   };
 
@@ -71,7 +75,7 @@ const Createsalary = () => {
             ]}
             value={formValues.sentTo}
             onChange={handleChange}
-            errorMessage={errors.sentTo}
+            error={errors.sentTo}
           />
 
           <FormField
@@ -85,20 +89,18 @@ const Createsalary = () => {
             ]}
             value={formValues.level}
             onChange={handleChange}
-            errorMessage={errors.level}
+            error={errors.level}
           />
 
-         
           <FormField
-  label="Basic Salary"
-  id="basicSalary" // this matches state now
-  type="text"
-  placeholder="Enter Salary"
-  value={formValues.basicSalary}
-  onChange={handleChange}
-  errorMessage={errors.basicSalary}
-/>
-
+            label="Basic Salary"
+            id="basicSalary"
+            type="text"
+            placeholder="Enter Salary"
+            value={formValues.basicSalary}
+            onChange={handleChange}
+            error={errors.basicSalary}
+          />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -109,28 +111,28 @@ const Createsalary = () => {
             placeholder="Enter allowance"
             value={formValues.allowance}
             onChange={handleChange}
-            errorMessage={errors.allowance}
+            error={errors.allowance}
           />
-<FormField
-  label="Gross Salary"
-  id="grossSalary"
-  type="text"
-  placeholder="Enter Gross Salary"
-  value={formValues.grossSalary}
-  onChange={handleChange}
-  errorMessage={errors.grossSalary}
-/>
 
-<FormField
-  label="Deductions"
-  id="deductions"
-  type="text"
-  placeholder="Enter Deductions"
-  value={formValues.deductions}
-  onChange={handleChange}
-  errorMessage={errors.deductions}
-/>
+          <FormField
+            label="Gross Salary"
+            id="grossSalary"
+            type="text"
+            placeholder="Enter Gross Salary"
+            value={formValues.grossSalary}
+            onChange={handleChange}
+            error={errors.grossSalary}
+          />
 
+          <FormField
+            label="Deductions"
+            id="deductions"
+            type="text"
+            placeholder="Enter Deductions"
+            value={formValues.deductions}
+            onChange={handleChange}
+            error={errors.deductions}
+          />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -141,7 +143,7 @@ const Createsalary = () => {
             placeholder="Enter net salary"
             value={formValues.netSalary}
             onChange={handleChange}
-            errorMessage={errors.netSalary}
+            error={errors.netSalary}
           />
         </div>
 

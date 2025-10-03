@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Table from '../comman/Table'; 
-import Footer from '../comman/Footer';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Table from "@comman/Table";
+import Footer from "@comman/Footer";
 
-const New = () => {
-  const [filter, setFilter] = useState('All staff');
+type TableRow = (string | JSX.Element)[];
 
-  const tableData = [
+const New: React.FC = () => {
+  const [filter, setFilter] = useState<string>("All staff");
+
+  const tableData: TableRow[] = [
     ["01", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", <Link to="#" className="text-blue-600 hover:underline">View more</Link>],
     ["02", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", <Link to="#" className="text-blue-600 hover:underline">View more</Link>],
     ["03", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", <Link to="#" className="text-blue-600 hover:underline">View more</Link>],
@@ -19,7 +21,7 @@ const New = () => {
     ["10", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Approved", <Link to="#" className="text-blue-600 hover:underline">View more</Link>],
   ];
 
-  const filteredData = filter === 'All staff' 
+  const filteredData = filter === "All staff"
     ? tableData
     : tableData.filter(row => row[7] === filter);
 
@@ -53,7 +55,7 @@ const New = () => {
       </div>
 
       <div className="bg-white rounded-lg">
-        <Table 
+        <Table
           title="Procurement Request"
           headers={["S/N", "Item", "Qty", "Amount", "Requested By", "Sent To", "Date", "Status", "Action"]}
           data={filteredData}

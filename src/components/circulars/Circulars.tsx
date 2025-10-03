@@ -1,15 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Table from '../comman/Table';
-import Footer from '../comman/Footer';
-import FormField from '../comman/FormField';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import FormField from "@comman/FormField";
+import Table from "@comman/Table";
+import Footer from "@comman/Footer";
 
-const Circulars = () => {
-  const [circularsData, setCircularsData] = useState([]);
-  
+type CircularRow = (string | React.ReactNode)[];
+
+type TableHeaders = string[];
+
+type OnChangeFunction = (event: React.ChangeEvent<HTMLInputElement>) => void;
+
+const Circulars: React.FC = () => {
+  const [circularsData, setCircularsData] = useState<CircularRow[]>([]);
+
   useEffect(() => {
-    const fetchCirculars = () => {
-      const data = [
+    const fetchCirculars = (): void => {
+      const data: CircularRow[] = [
         ["01", "Operations circular", "Williams Achugbani", "Chief Operations Officer", "16/11/2022", "Received ⬇", actionLink()],
         ["02", "Operations circular", "Williams Achugbani", "Chief Operations Officer", "16/11/2022", "Sent ↗", actionLink()],
         ["03", "Operations circular", "Williams Achugbani", "Chief Operations Officer", "16/11/2022", "Received ⬇", actionLink()],
@@ -30,26 +36,40 @@ const Circulars = () => {
     fetchCirculars();
   }, []);
 
-  const actionLink = () => (
+  // "View more" link
+  const actionLink = (): React.ReactNode => (
     <Link to="#" className="text-blue-600 hover:underline">
       View more
     </Link>
   );
 
+  const tableHeaders: TableHeaders = [
+    "S/N",
+    "Circular Title",
+    "Sent From",
+    "Sent To",
+    "Date",
+    "Circular Type",
+    "Action"
+  ];
+
+  const handleSearchChange: OnChangeFunction = (event) => {
+    console.log("Search query:", event.target.value);
+  };
+
   return (
     <div className="p-5 text-gray-800">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-        
         <div className="flex-1 min-w-[250px]">
-       <FormField
-          label="Quick search a circular"
-          id="searchCircular"
-          placeholder="Enter item name"
-          type="text"
-          options={[]}
-          errorMessage=""
-          onChange={() => {}}
-        />
+          <FormField
+            label="Quick search a circular"
+            id="searchCircular"
+            placeholder="Enter item name"
+            type="text"
+            options={[]}
+            errorMessage=""
+            onChange={handleSearchChange}
+          />
         </div>
 
         <div className="p-4 rounded-md text-center">
@@ -77,7 +97,7 @@ const Circulars = () => {
       <div className="bg-white rounded-lg">
         <Table
           title="All Circulars"
-          headers={["S/N", "Circular Title", "Sent From", "Sent To", "Date", "Circular Type", "Action"]}
+          headers={tableHeaders}
           data={circularsData}
         />
       </div>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import type { ChangeEvent } from 'react';
-import Button from '../../components/comman/Button';
-import FormField from '../comman/FormField'; 
+import Button from "@components/comman/Button";
+import FormField from '@comman/FormField'; 
 import { Link } from 'react-router-dom';
-import SuccessModal from '../comman/SuccessModal'; 
+import SuccessModal from '@comman/SuccessModal'; 
 
 const Building = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

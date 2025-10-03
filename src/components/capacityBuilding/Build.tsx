@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import Button from '../../components/comman/Button';
-import { Link } from 'react-router-dom';
-import DetailsGroup from './DetailsGroup'; 
-import ParticipantList from './ParticipantList'; 
+import React, { useState } from "react";
+import Button from "@components/comman/Button";
+import { Link } from "react-router-dom";
+import DetailsGroup from "@capacityBuilding/DetailsGroup";
+import ParticipantList from "@capacityBuilding/ParticipantList";
+
+type Participant = string;
 
 const Build: React.FC = () => {
-  const participants = [
+  const participants: Participant[] = [
     "Fatima Mohammed",
     "Ibrahim Bankole",
     "Otor John Stephen",
@@ -14,15 +16,20 @@ const Build: React.FC = () => {
     "Sadiq Lukman"
   ];
 
-  const [status, setStatus] = useState('');
-  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const [status, setStatus] = useState<string>("");
+
+  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     setStatus(e.target.value);
   };
 
   return (
     <div className="p-5 bg-gray-100 rounded-lg">
-      <Link to="/dashboard/capacity-building/building" className="inline-block mb-5 text-blue-600 text-lg">Back</Link>
+      <Link to="/dashboard/capacity-building/building" className="inline-block mb-5 text-blue-600 text-lg">
+        Back
+      </Link>
+
       <h2 className="text-2xl mb-2">Staff Health and Safety Training</h2>
+
       <div className="mb-5">
         <div className="flex justify-between mb-5">
           <DetailsGroup label="Training type" value="Team training" />
@@ -47,14 +54,13 @@ const Build: React.FC = () => {
             <option value="completed">Completed</option>
             <option value="cancelled">Cancelled</option>
           </select>
-    
+
           <Button
             text="Update"
             className="ml-2 bg-blue-600 text-white rounded px-4 py-2"
             onClick={() => alert(`Status updated to: ${status}`)}
-            link={null} 
+            link={null}
           />
-
         </div>
       </div>
     </div>

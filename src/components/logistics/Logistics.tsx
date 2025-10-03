@@ -1,36 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Card from '../comman/Card';
-import Table from '../comman/Table';
-import Footer from '../comman/Footer';
-
-import IconStaff from '../../assets/Group 9.png';
-import IconApplication from '../../assets/Group 9 (1).png';
-import IconProjects from '../../assets/Group 9 (2).png';
-import IconDepartments from '../../assets/Group 9 (3).png';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Card from "@comman/Card";
+import Table from "@comman/Table";
+import Footer from "@comman/Footer";
+import { CARD_DATA, TABLE_HEADERS } from "@logistics/constants";
+import type { TableRow } from "@logistics/types";
 
 const Logistics: React.FC = () => {
-  const [tableData, setTableData] = useState<React.ReactNode[][]>([]);
-
-  useEffect(() => {
-    const fetchData = () => {
-      const data = [
-        ["01", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
-        ["02", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
-        ["03", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
-        ["04", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
-        ["05", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Approved", actionLink()],
-        ["06", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
-        ["07", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
-        ["08", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
-        ["09", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
-        ["10", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Approved", actionLink()],
-      ];
-      setTableData(data);
-    };
-
-    fetchData();
-  }, []);
+  const [tableData, setTableData] = useState<TableRow[]>([]);
 
   const actionLink = () => (
     <Link to="#" className="text-blue-600 hover:underline">
@@ -38,33 +15,37 @@ const Logistics: React.FC = () => {
     </Link>
   );
 
+  useEffect(() => {
+    const fetchData = () => {
+      const data: TableRow[] = [
+        ["01", "Office chairs", "20", "360,000.00", "Otor John", "Faruk Hashim", "21/11/2022", "Pending", actionLink()],
+        ["02", "Office tables", "10", "180,000.00", "Otor John", "Faruk Hashim", "22/11/2022", "Approved", actionLink()],
+        ["03", "Projector", "2", "120,000.00", "Otor John", "Faruk Hashim", "23/11/2022", "Pending", actionLink()],
+        ["04", "Laptops", "5", "500,000.00", "Otor John", "Faruk Hashim", "24/11/2022", "Approved", actionLink()],
+        ["05", "Stationery", "50", "30,000.00", "Otor John", "Faruk Hashim", "25/11/2022", "Pending", actionLink()],
+      ];
+      setTableData(data);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="dashboard-main">
+      {/* Cards */}
       <div className="flex flex-wrap gap-5">
-        <Card 
-          value="300" 
-          iconSrc={IconStaff} 
-          label="Total number of staff" 
-          trend="12 more than last quarter" 
-        />
-        <Card
-          value="5,000,000" 
-          iconSrc={IconApplication} 
-          label="Total application" 
-        />
-        <Card
-          value="70" 
-          iconSrc={IconProjects} 
-          label="Total projects" 
-        />
-        <Card
-          value="280" 
-          iconSrc={IconDepartments} 
-          label="Total projects" 
-          trend="12 more than last quarter" 
-        />
+        {CARD_DATA.map((card, index) => (
+          <Card
+            key={index}
+            value={card.value}
+            iconSrc={card.iconSrc}
+            label={card.label}
+            trend={card.trend}
+          />
+        ))}
       </div>
 
+      {/* Table Header */}
       <div className="flex justify-between items-center mb-4 w-[1097px] m-auto">
         <h4 className="text-lg">Logistics Request</h4>
         <Link className="button" to="/dashboard/logistics/request">
@@ -72,11 +53,10 @@ const Logistics: React.FC = () => {
         </Link>
       </div>
 
-      <Table
-        headers={["S/N", "Title", "Level", "Basic Salary", "Allowance", "Gross Salary", "Deductions", "Net Salary", "Action"]}
-        data={tableData}
-      />
+      {/* Table */}
+      <Table headers={TABLE_HEADERS} data={tableData} />
 
+      {/* Footer */}
       <Footer />
     </div>
   );

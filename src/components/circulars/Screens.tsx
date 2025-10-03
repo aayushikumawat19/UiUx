@@ -1,54 +1,32 @@
-import React, { useState, type ChangeEvent, type FormEvent } from 'react';
-import Button from '../../components/comman/Button';
-import FormField from '../comman/FormField';
-import { Link } from 'react-router-dom';
-import SuccessModal from '../comman/SuccessModal';
+import React, { useState, type ChangeEvent, type FormEvent } from "react";
+import Button from "@comman/Button";
+import FormField from "@comman/FormField";
+import { Link } from "react-router-dom";
+import SuccessModal from "@comman/SuccessModal";
+import type { CircularFormData, CircularFormErrors, OnChangeFunction } from "@circulars/types";
+import { initialFormData, initialFormErrors, sentToOptions } from "@circulars/state";
 
 const Screens: React.FC = () => {
-  const [formData, setFormData] = useState({
-    memoTitle: '',
-    sentFrom: 'Otor John',
-    sentTo: '',
-    date: '',
-    memoBody: '',
-  });
-
-  const [formErrors, setFormErrors] = useState({
-    memoTitle: '',
-    sentTo: '',
-    date: '',
-    memoBody: '',
-  });
-
+  const [formData, setFormData] = useState<CircularFormData>(initialFormData);
+  const [formErrors, setFormErrors] = useState<CircularFormErrors>(initialFormErrors);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange: OnChangeFunction = (e) => {
     const { id, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [id]: value,
-    }));
-    setFormErrors(prev => ({
-      ...prev,
-      [id]: '', // clear error on change
-    }));
+    setFormData((prev) => ({ ...prev, [id]: value }));
+    setFormErrors((prev) => ({ ...prev, [id]: "" }));
   };
 
   const validateForm = () => {
-    const errors: typeof formErrors = {
-      memoTitle: '',
-      sentTo: '',
-      date: '',
-      memoBody: '',
-    };
+    const errors: CircularFormErrors = { ...initialFormErrors };
 
-    if (!formData.memoTitle.trim()) errors.memoTitle = 'Title is required';
-    if (!formData.sentTo) errors.sentTo = 'Select recipient';
-    if (!formData.date) errors.date = 'Date is required';
-    if (!formData.memoBody.trim()) errors.memoBody = 'Message is required';
+    if (!formData.memoTitle.trim()) errors.memoTitle = "Title is required";
+    if (!formData.sentTo) errors.sentTo = "Select recipient";
+    if (!formData.date) errors.date = "Date is required";
+    if (!formData.memoBody.trim()) errors.memoBody = "Message is required";
 
     setFormErrors(errors);
-    return Object.values(errors).every(err => err === '');
+    return Object.values(errors).every((err) => err === "");
   };
 
   const handleSendCircular = (event: FormEvent<HTMLFormElement>) => {
@@ -60,24 +38,17 @@ const Screens: React.FC = () => {
 
   const handleContinue = () => {
     setIsModalOpen(false);
-    // Optionally reset form here
   };
 
   return (
     <div className="max-w-[1180px] mx-auto py-10 px-4 min-h-screen bg-[#f9fafe]">
-      <Link
-        to="/dashboard/circulars"
-        className="text-blue-500 font-medium inline-block mb-4"
-      >
+      <Link to="/dashboard/circulars" className="text-blue-500 font-medium inline-block mb-4">
         &larr; Back
       </Link>
 
       <h2 className="text-2xl font-semibold text-gray-800 mb-6">Create Circular</h2>
 
-      <form
-        className="bg-white rounded-xl shadow-md p-6 space-y-6"
-        onSubmit={handleSendCircular}
-      >
+      <form className="bg-white rounded-xl shadow-md p-6 space-y-6" onSubmit={handleSendCircular}>
         <div className="flex flex-wrap gap-6">
           <div className="flex-1 min-w-[250px]">
             <FormField
@@ -109,11 +80,7 @@ const Screens: React.FC = () => {
               type="select"
               value={formData.sentTo}
               placeholder="Select option"
-              options={[
-                { value: '', label: 'Select option' },
-                { value: 'office1', label: 'Office 1' },
-                { value: 'office2', label: 'Office 2' },
-              ]}
+              options={sentToOptions}
               errorMessage={formErrors.sentTo}
               onChange={handleChange}
             />
@@ -157,12 +124,7 @@ const Screens: React.FC = () => {
         </div>
       </form>
 
-      {isModalOpen && (
-        <SuccessModal
-          message="Your circular has been sent successfully!"
-          onContinue={handleContinue}
-        />
-      )}
+      {isModalOpen && <SuccessModal message="Your circular has been sent successfully!" onContinue={handleContinue} />}
     </div>
   );
 };

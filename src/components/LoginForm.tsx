@@ -1,52 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthLayout from "./AuthLayout";
-import FormField from "./comman/FormField";
+import AuthLayout from "@layout/AuthLayout";
+import FormField from "@comman/FormField";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+interface LoginResponse {
+  token: string;
+  user: Record<string, any>;
+  message?: string;
+}
+
+const LoginForm: React.FC = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!email || !password) {
       setError("Please fill all fields");
       return;
     }
-    
+
     try {
       const res = await fetch("http://192.168.0.28:8080/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-       
-      const data = await res.json();
+
+      const data: LoginResponse = await res.json();
 
       if (!res.ok) {
         setError(data.message || "Login failed");
         return;
       }
 
-      // Save token & user details
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      navigate("/dashboard"); // redirect to dashboard
-    } catch (err) {
-      setError("Server error: " + err);
+      navigate("/dashboard");
+    } catch (err: any) {
+      setError("Server error: " + (err?.message || err));
     }
   };
-  
+
   return (
     <AuthLayout title="Please Sign In" subtitle="Welcome back !!">
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-        {/* Email field */}
         <FormField
           label="Email"
           id="login_email"
@@ -55,7 +60,6 @@ const LoginForm = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        {/* Password field with eye icon */}
         <div className="relative">
           <FormField
             label="Password"
@@ -72,33 +76,38 @@ const LoginForm = () => {
           </span>
         </div>
 
-        {/* Error message */}
         {error && (
-          <p style={{ color: "red", fontSize: "14px", marginTop: "5px", fontWeight: "500" }}>
+          <p
+            style={{
+              color: "red",
+              fontSize: "14px",
+              marginTop: "5px",
+              fontWeight: "500",
+            }}
+          >
             {error}
           </p>
         )}
 
-        {/* Sign in button */}
-      <button type="submit" className="auth-button ">
+        <button type="submit" className="auth-button">
           Sign In
         </button>
       </form>
 
       {/* Signup link */}
-       <p style={{ marginTop: "1rem", fontSize: "0.875rem" }}>
+      <p style={{ marginTop: "1rem", fontSize: "0.875rem" }}>
         Don’t have an account?{" "}
         <span
-            style={{
+          style={{
             color: "#2563eb",
             cursor: "pointer",
             textDecoration: "underline",
-            }}
-            onClick={() => navigate("/signup")}
+          }}
+          onClick={() => navigate("/signup")}
         >
-            Signup
+          Signup
         </span>
-        </p>
+      </p>
     </AuthLayout>
   );
 };

@@ -1,9 +1,26 @@
-import React, { useState, useEffect, FormEvent, ChangeEvent } from 'react';
-import FormField from '../../components/comman/FormField';
-import Button from '../../components/comman/Button';
+import React, { useState, useEffect } from 'react';
+import type { FormEvent, ChangeEvent } from 'react';
+import FormField from '@comman/FormField';
+import Button from '@comman/Button';
 
-const CreateMemo = () => {
-  const [formData, setFormData] = useState({
+interface FormData {
+  [key: string]: string;
+  basicSalary: string;
+  housing: string;
+  transport: string;
+  utility: string;
+  productivity: string;
+  communication: string;
+  inconvenience: string;
+  tax: string;
+  pension: string;
+  gross: string;
+  deduction: string;
+  netSalary: string;
+}
+
+const CreateMemo: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({
     basicSalary: '',
     housing: '',
     transport: '',
@@ -20,13 +37,15 @@ const CreateMemo = () => {
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     const { id, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [id]: value,
     }));
-    setErrors(prev => ({
+    setErrors((prev) => ({
       ...prev,
       [id]: '',
     }));
@@ -34,6 +53,7 @@ const CreateMemo = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+
     let hasError = false;
     const newErrors: { [key: string]: string } = {};
 
@@ -50,7 +70,7 @@ const CreateMemo = () => {
     ];
 
     requiredFields.forEach((field) => {
-      if (!formData[field].trim()) {
+      if (!formData[field]?.trim()) {
         newErrors[field] = 'This field is required';
         hasError = true;
       }
@@ -60,7 +80,6 @@ const CreateMemo = () => {
 
     if (!hasError) {
       console.log('Submitted Data:', formData);
-      // navigate or process
     }
   };
 
@@ -79,7 +98,7 @@ const CreateMemo = () => {
     const deduction = toNumber(formData.tax) + toNumber(formData.pension);
     const net = gross - deduction;
 
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       gross: gross.toFixed(2),
       deduction: deduction.toFixed(2),
@@ -104,72 +123,30 @@ const CreateMemo = () => {
         <h2 className="text-2xl font-semibold mb-6">Create Payslip</h2>
 
         <form onSubmit={handleSubmit}>
+          {/* Salary Structure */}
           <div className="mt-10">
             <h3 className="text-lg font-semibold mb-4">Salary Structure</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <FormField
-                label="Basic salary"
-                id="basicSalary"
-                type="text"
-                value={formData.basicSalary}
-                placeholder="Enter amount"
-                onChange={handleChange}
-                errorMessage={errors.basicSalary}
-              />
-              <FormField
-                label="Housing allowance"
-                id="housing"
-                type="text"
-                value={formData.housing}
-                placeholder="Enter amount"
-                onChange={handleChange}
-                errorMessage={errors.housing}
-              />
-              <FormField
-                label="Transport allowance"
-                id="transport"
-                type="text"
-                value={formData.transport}
-                placeholder="Enter amount"
-                onChange={handleChange}
-                errorMessage={errors.transport}
-              />
-              <FormField
-                label="Utility allowance"
-                id="utility"
-                type="text"
-                value={formData.utility}
-                placeholder="Enter amount"
-                onChange={handleChange}
-                errorMessage={errors.utility}
-              />
-              <FormField
-                label="Productivity allowance"
-                id="productivity"
-                type="text"
-                value={formData.productivity}
-                placeholder="Enter amount"
-                onChange={handleChange}
-                errorMessage={errors.productivity}
-              />
-              <FormField
-                label="Communication allowance"
-                id="communication"
-                type="text"
-                value={formData.communication}
-                placeholder="Enter amount"
-                onChange={handleChange}
-                errorMessage={errors.communication}
-              />
-              <FormField
-                label="Inconvenience allowance"
-                id="inconvenience"
-                type="text"
-                value={formData.inconvenience}
-                placeholder="Enter amount"
-                onChange={handleChange}
-                errorMessage={errors.inconvenience}
-              />
+              {[
+                { label: 'Basic salary', id: 'basicSalary' },
+                { label: 'Housing allowance', id: 'housing' },
+                { label: 'Transport allowance', id: 'transport' },
+                { label: 'Utility allowance', id: 'utility' },
+                { label: 'Productivity allowance', id: 'productivity' },
+                { label: 'Communication allowance', id: 'communication' },
+                { label: 'Inconvenience allowance', id: 'inconvenience' },
+              ].map((field) => (
+                <FormField
+                  key={field.id}
+                  label={field.label}
+                  id={field.id}
+                  type="text"
+                  value={formData[field.id]}
+                  placeholder="Enter amount"
+                  onChange={handleChange}
+                  error={errors[field.id]}
+                />
+              ))}
               <FormField
                 label="Gross Salary"
                 id="gross"
@@ -181,27 +158,25 @@ const CreateMemo = () => {
             </div>
           </div>
 
+          {/* Deductions */}
           <div className="mt-10">
             <h3 className="text-lg font-semibold mb-4">Deductions</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <FormField
-                label="TAX/PAYE"
-                id="tax"
-                type="text"
-                value={formData.tax}
-                placeholder="Enter amount"
-                onChange={handleChange}
-                errorMessage={errors.tax}
-              />
-              <FormField
-                label="Employee pension"
-                id="pension"
-                type="text"
-                value={formData.pension}
-                placeholder="Enter amount"
-                onChange={handleChange}
-                errorMessage={errors.pension}
-              />
+              {[
+                { label: 'TAX/PAYE', id: 'tax' },
+                { label: 'Employee pension', id: 'pension' },
+              ].map((field) => (
+                <FormField
+                  key={field.id}
+                  label={field.label}
+                  id={field.id}
+                  type="text"
+                  value={formData[field.id]}
+                  placeholder="Enter amount"
+                  onChange={handleChange}
+                  error={errors[field.id]}
+                />
+              ))}
               <FormField
                 label="Total deduction"
                 id="deduction"
@@ -213,6 +188,7 @@ const CreateMemo = () => {
             </div>
           </div>
 
+          {/* Net Salary */}
           <div className="mt-10">
             <h3 className="text-lg font-semibold mb-4">Net Salary</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -227,6 +203,7 @@ const CreateMemo = () => {
             </div>
           </div>
 
+          {/* Submit Button */}
           <div className="mt-10">
             <Button
               text="Create Payslip"

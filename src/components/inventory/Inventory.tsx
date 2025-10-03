@@ -1,26 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Card from '../comman/Card';
-import Footer from '../comman/Footer';
-import Table from '../comman/Table';
-import ImgPen from '../../assets/Inventory/Rectangle 39.png';
-import ImgA4Paper from '../../assets/Inventory/Rectangle 39 (1).png';
-import ImgLiquidWash from '../../assets/Inventory/Rectangle 39 (2).png';
-import ImgPaperClips from '../../assets/Inventory/Rectangle 39 (3).png';
-import ImgNotepads from '../../assets/Inventory/Rectangle 39 (4).png';
-import ImgAirFreshner from '../../assets/Inventory/Rectangle 39 (5).png';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Card from "@comman/Card";
+import Footer from "@comman/Footer";
+import Table from "@comman/Table";
+import ImgPen from "@assets/Inventory/Rectangle 39.png";
+import ImgA4Paper from "@assets/Inventory/Rectangle 39 (1).png";
+import ImgLiquidWash from "@assets/Inventory/Rectangle 39 (2).png";
+import ImgPaperClips from "@assets/Inventory/Rectangle 39 (3).png";
+import ImgNotepads from "@assets/Inventory/Rectangle 39 (4).png";
+import ImgAirFreshner from "@assets/Inventory/Rectangle 39 (5).png";
+import IconStaff from "@assets/Group 9.png";
+import IconApplication from "@assets/Group 9 (1).png";
+import IconProjects from "@assets/Group 9 (2).png";
+import IconDepartments from "@assets/Group 9 (3).png";
 
-import IconStaff from '../../assets/Group 9.png';
-import IconApplication from '../../assets/Group 9 (1).png';
-import IconProjects from '../../assets/Group 9 (2).png';
-import IconDepartments from '../../assets/Group 9 (3).png';
+type InventoryRow = (string | React.ReactNode)[];
 
 const Inventory: React.FC = () => {
-  const [tableData, setTableData] = useState<React.ReactNode[][]>([]);
+  const [tableData, setTableData] = useState<InventoryRow[]>([]);
 
   useEffect(() => {
     const fetchData = () => {
-      const data: React.ReactNode[][] = [
+      const data: InventoryRow[] = [
         [
           "01",
           <img src={ImgPen} alt="Pen" className="product-image" />,
@@ -32,7 +33,7 @@ const Inventory: React.FC = () => {
           "₦5,000.00",
           "40 pcs",
           "Big Ben’s Store",
-          "In stock"
+          "In stock",
         ],
         [
           "02",
@@ -45,11 +46,15 @@ const Inventory: React.FC = () => {
           "₦60,000.00",
           "0 pcs",
           "Big Ben’s Store",
-          "Out of Stock"
+          "Out of Stock",
         ],
         [
           "03",
-          <img src={ImgLiquidWash} alt="Liquid Wash" className="product-image" />,
+          <img
+            src={ImgLiquidWash}
+            alt="Liquid Wash"
+            className="product-image"
+          />,
           "Liquid Wash",
           "36426787",
           "Detergent",
@@ -58,11 +63,15 @@ const Inventory: React.FC = () => {
           "₦175,000.00",
           "10 pcs",
           "Quality wash",
-          "Low in stock"
+          "Low in stock",
         ],
         [
           "04",
-          <img src={ImgPaperClips} alt="Paper Clips" className="product-image" />,
+          <img
+            src={ImgPaperClips}
+            alt="Paper Clips"
+            className="product-image"
+          />,
           "Paper Clips",
           "45656787",
           "Stationaries",
@@ -71,7 +80,7 @@ const Inventory: React.FC = () => {
           "₦9,000.00",
           "10 pcs",
           "Big Ben’s Store",
-          "Low in Stock"
+          "Low in Stock",
         ],
         [
           "05",
@@ -84,11 +93,15 @@ const Inventory: React.FC = () => {
           "₦200,000.00",
           "45 pcs",
           "Big Ben’s Store",
-          "In Stock"
+          "In Stock",
         ],
         [
           "06",
-          <img src={ImgAirFreshner} alt="Air Freshner" className="product-image" />,
+          <img
+            src={ImgAirFreshner}
+            alt="Air Freshner"
+            className="product-image"
+          />,
           "Air Freshner",
           "36420021",
           "Detergent",
@@ -97,9 +110,10 @@ const Inventory: React.FC = () => {
           "₦10,000.00",
           "0 pcs",
           "Quality wash",
-          "Out of Stock"
+          "Out of Stock",
         ],
       ];
+
       setTableData(data);
     };
 
@@ -108,40 +122,46 @@ const Inventory: React.FC = () => {
 
   return (
     <div className="dashboard-main">
+      {/* Cards */}
       <div className="flex flex-wrap gap-5 mb-6">
-        <Card 
-          value="250" 
-          iconSrc={IconStaff} 
-          label="Total number of staff" 
-          trend="12 more than last quarter" 
+        <Card
+          value="250"
+          iconSrc={IconStaff}
+          label="Total number of staff"
+          trend="12 more than last quarter"
         />
         <Card
-          value="250" 
-          iconSrc={IconApplication} 
-          label="Total application" 
-          trend="12 more than last quarter" 
+          value="250"
+          iconSrc={IconApplication}
+          label="Total application"
+          trend="12 more than last quarter"
         />
         <Card
-          value="250" 
-          iconSrc={IconProjects} 
-          label="Total projects" 
-          trend="12 more than last quarter" 
+          value="250"
+          iconSrc={IconProjects}
+          label="Total projects"
+          trend="12 more than last quarter"
         />
         <Card
-          value="10" 
-          iconSrc={IconDepartments} 
-          label="Total departments" 
-          trend="12 more than last quarter" 
+          value="10"
+          iconSrc={IconDepartments}
+          label="Total departments"
+          trend="12 more than last quarter"
         />
       </div>
 
+      {/* Header with button */}
       <div className="flex justify-between items-center mb-4 w-[1097px] mx-auto">
         <h4 className="text-lg font-semibold">Update Stock List</h4>
-        <Link className="button bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition" to="/dashboard/inventory/item">
+        <Link
+          className="button bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+          to="/dashboard/inventory/item"
+        >
           Update Stock
         </Link>
       </div>
 
+      {/* Table */}
       <div className="max-w-[1097px] mx-auto bg-white rounded-lg shadow-md p-4 overflow-x-auto">
         <Table
           headers={[
@@ -155,7 +175,7 @@ const Inventory: React.FC = () => {
             "Total Amount",
             "In-Stock",
             "Supplier",
-            "Status"
+            "Status",
           ]}
           data={tableData}
         />

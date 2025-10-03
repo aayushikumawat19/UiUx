@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import ProfileIcon from '../../assets/Profile Icon.png';
-import SettingsIcon from '../../assets/Settings Icon.png';
-import LogoutIcon from '../../assets/Logout Icon.png';
-import HappyEmoji from '../../assets/Happy-Emoji-PNG 1.png';
-import NotificationsIcon from '../../assets/Sidebar/Notifications.png';
-import AvatarImage from '../../assets/Ellipse 1.png';
+import ProfileIcon from '@assets/Profile Icon.png';
+import SettingsIcon from '@assets/Settings Icon.png';
+import LogoutIcon from '@assets/Logout Icon.png';
+import HappyEmoji from '@assets/Happy-Emoji-PNG 1.png';
+import NotificationsIcon from '@assets/Sidebar/Notifications.png';
+import AvatarImage from '@assets/Ellipse 1.png';
 
 const DashboardHeader = () => {
   const [user, setUser] = useState({

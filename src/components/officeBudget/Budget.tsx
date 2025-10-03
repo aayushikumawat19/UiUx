@@ -1,11 +1,18 @@
 import React, { useState, type ChangeEvent } from 'react';
-import FormField from '../../components/comman/FormField';
-import Button from '../../components/comman/Button';
-import PaymentVoucherTable from '../comman/PaymentVoucherTable';
+import FormField from '@comman/FormField';
+import Button from '@comman/Button';
+import PaymentVoucherTable from '@comman/PaymentVoucherTable';
 
+type FormValues = {
+  basicSalary: string;
+  housing: string;
+  transport: string;
+  utility: string;
+  productivity: string;
+};
 
-const Budget = () => {
- const [formValues, setFormValues] = useState({
+const Budget: React.FC = () => {
+  const [formValues, setFormValues] = useState<FormValues>({
     basicSalary: '',
     housing: '',
     transport: '',
@@ -13,19 +20,23 @@ const Budget = () => {
     productivity: '',
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { id, value } = e.target;
     setFormValues(prev => ({ ...prev, [id]: value }));
   };
-  const paymentVoucherData = [
+
+  const paymentVoucherData: string[][] = [
     ["01", "Request for travel time", "Training course", "22/11/2022", "30/11/2022", "360,000.00"],
   ];
 
   return (
     <div className="p-6 min-h-screen">
-      <div className="max-w-6xl mx-auto bg-white rounded-lg">
+      <div className="max-w-6xl mx-auto bg-white rounded-lg p-6">
         <button className="text-blue-600 hover:underline mb-4">&larr; Back</button>
         <h2 className="text-2xl font-semibold mb-6">Create Payslip</h2>
+
         <div className="mt-10">
           <h3 className="text-lg font-semibold mb-4">Salary Structure</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -65,15 +76,18 @@ const Budget = () => {
               value={formValues.productivity}
             />
           </div>
-          <PaymentVoucherTable data={paymentVoucherData} />
+
+          <div className="mt-8">
+            <PaymentVoucherTable data={paymentVoucherData} />
+          </div>
         </div>
 
         <div className="mt-10">
           <Button
             text="Create Payslip"
             className="w-full md:w-60 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-md"
-            onClick={() => {}}
-          link={null}
+            onClick={() => console.log("Payslip Created", formValues)}
+            link={null}
           />
         </div>
       </div>

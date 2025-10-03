@@ -1,19 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, type FormEvent } from "react";
 import { useParams, Navigate } from "react-router-dom";
-import AuthLayout from "./AuthLayout";
-import FormField from "./comman/FormField";
+import AuthLayout from "@layout/AuthLayout";
+import FormField from "@comman/FormField";
 
-const ChangePassword = () => {
-  const { id } = useParams();
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [success, setSuccess] = useState(false);
+type ChangePasswordParams = {
+  id: string;
+};
 
-  const handleChangePassword = async (e: React.FormEvent) => {
+const ChangePassword: React.FC = () => {
+  const { id } = useParams<ChangePasswordParams>();
+
+  // State variables
+  const [oldPassword, setOldPassword] = useState<string>("");
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
+  const [success, setSuccess] = useState<boolean>(false);
+
+  // Handler
+  const handleChangePassword = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Validation
     if (!oldPassword || !newPassword || !confirmPassword) {
       setMessage("Please fill all fields");
       return;
@@ -42,17 +50,15 @@ const ChangePassword = () => {
         return;
       }
 
-      // Success message
       setMessage(data.message || "Password changed successfully");
       setSuccess(true);
 
-      // fields clear
+      // Clear fields
       setOldPassword("");
       setNewPassword("");
       setConfirmPassword("");
-
     } catch (err: any) {
-      setMessage(`Error: ${err.message}`);
+      setMessage(`Error: ${err?.message || "Unknown error"}`);
     }
   };
 
@@ -92,7 +98,12 @@ const ChangePassword = () => {
 
       {message && (
         <p
-          style={{ color: success ? "green" : "red",fontSize: "14px",marginTop: "5px",fontWeight: "500",}}
+          style={{
+            color: success ? "green" : "red",
+            fontSize: "14px",
+            marginTop: "5px",
+            fontWeight: 500,
+          }}
         >
           {message}
         </p>
